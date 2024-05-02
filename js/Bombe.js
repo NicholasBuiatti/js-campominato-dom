@@ -16,3 +16,10 @@
 // }
 
 // console.log(bombe);
+
+// i = 1
+// let cellaBomba = Math.floor(Math.random() * 100 + 1)
+// while (!bombe.includes(cellaBomba) && i <=16) {
+//     bombe.push(cellaBomba)
+//     i++;
+// }

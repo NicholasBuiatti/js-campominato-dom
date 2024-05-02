@@ -1,8 +1,10 @@
 const container = document.getElementById('container-game');
 const btnStart = document.querySelector('#startGame');
 const widthContainer = document.querySelector('#container-game');
+const punteggioTxt = document.querySelector('#punteggio');
 let bombe = [];
 let cellaBomba;
+let punteggio;
 
 btnStart.addEventListener('click', function () {
 
@@ -12,11 +14,12 @@ btnStart.addEventListener('click', function () {
     console.log(modeEasy, modeMedium, modeHard);
 
     widthContainer.innerHTML = '';
-    
+    punteggio = 0;
     if (modeEasy == true) {
         widthContainer.classList.remove('my-width-medium');
         widthContainer.classList.remove('my-width-hard');
         widthContainer.classList.add('my-width-easy');
+
         for (let i = 1; i <= 16; i++) {
             //creo un numero casuale tra 0 e 100
             cellaBomba = Math.floor(Math.random() * 100 + 1)
@@ -28,16 +31,16 @@ btnStart.addEventListener('click', function () {
             } else {
                 bombe.push(cellaBomba)
             }
-            
+
         }
-        console.log(bombe);
         creazioneGriglia(100);
-        
+
 
     } else if (modeMedium == true) {
         widthContainer.classList.remove('my-width-hard');
         widthContainer.classList.remove('my-width-easy');
         widthContainer.classList.add('my-width-medium');
+
         for (let i = 1; i <= 16; i++) {
             //creo un numero casuale tra 0 e 100
             cellaBomba = Math.floor(Math.random() * 81 + 1)
@@ -49,7 +52,7 @@ btnStart.addEventListener('click', function () {
             } else {
                 bombe.push(cellaBomba)
             }
-            
+
         }
         creazioneGriglia(81);
         console.log(bombe);
@@ -58,6 +61,7 @@ btnStart.addEventListener('click', function () {
         widthContainer.classList.remove('my-width-easy');
         widthContainer.classList.remove('my-width-medium');
         widthContainer.classList.add('my-width-hard');
+
         for (let i = 1; i <= 16; i++) {
             //creo un numero casuale tra 0 e 100
             cellaBomba = Math.floor(Math.random() * 49 + 1)
@@ -69,7 +73,7 @@ btnStart.addEventListener('click', function () {
             } else {
                 bombe.push(cellaBomba)
             }
-            
+
         }
         creazioneGriglia(49);
         console.log(bombe);
@@ -97,27 +101,30 @@ function createSquare(classCss) {
 
 
 //funzione per la creazione della tabella in griglia variabile
- function creazioneGriglia(nSquare) {
-     for (let i = 1; i <= nSquare; i++) {
-         let square = createSquare('my-square');
-         square.addEventListener('click', function () {
-             clickSquare(square, 'bg-primary', 'bg-warning', i, bombe)
-         })
-         container.append(square)
-     }
- }
- 
- //funzione per l'interazione con il click su un ogg per cambiare la classe e la comparsa del textSquare
- function clickSquare(ogg, classe, classe2, textSquare, arrayBombe) {
+function creazioneGriglia(nSquare) {
+    for (let i = 1; i <= nSquare; i++) {
+        let square = createSquare('my-square');
+        square.addEventListener('click', function () {
+            clickSquare(square, 'bg-primary', 'bg-warning', i, bombe)
+        })
+        container.append(square);
+    }
+}
+
+//funzione per l'interazione con il click su un ogg per cambiare la classe e la comparsa del textSquare
+function clickSquare(ogg, classe, classe2, textSquare, arrayBombe) {
     if (ogg.classList.contains(classe) == false && arrayBombe.includes(textSquare) == false) {
         ogg.classList.add(classe);
+        punteggio = punteggio + 100;
+        punteggioTxt.innerHTML = punteggio;
         return ogg.innerHTML = textSquare;
+        
     } else if (ogg.classList.contains(classe) == false && arrayBombe.includes(textSquare) == true) {
         ogg.classList.add(classe2);
+        alert('hai perso');
+        
         return ogg.innerHTML = 'bomba';
-    } else {
-        ogg.classList.remove(classe);
-        return ogg.innerHTML = '';
+        
     }
 }
 /*
@@ -138,3 +145,13 @@ function createSquare(classCss) {
   }
 */
 
+// function randomnumber(arrayBombe, caselle) {
+//     arrayBombe = [];
+//         let i = 1
+//         while (!arrayBombe.includes(cellaBomba) && i <= 16) {
+//             let cellaBomba = Math.floor(Math.random() * caselle + 1)
+//             arrayBombe.push(cellaBomba)
+//             i++;
+//         }
+//         console.log(arrayBombe);
+// }
